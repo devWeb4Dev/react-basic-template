@@ -1,21 +1,21 @@
 type TRepositoryItemProps = {
   repository: {
-    name: string;
-    description: string;
-    html_url: string;
+    name: string
+    description: string
+    htmlUrl: string
   }
 }
 
-export function RepositoryItem(props: TRepositoryItemProps) {
+export const RepositoryItem: React.FC<TRepositoryItemProps> = (
+  props: TRepositoryItemProps
+) => {
   const { repository } = props
   return (
     <li>
       <strong>{repository.name}</strong>
-      <p>{repository.description}</p>  
-      
-      <a href={repository.html_url}>
-        Acessar repositorio
-      </a>
+      <p>{repository.description}</p>
+
+      <a href={repository.htmlUrl}>Acessar repositorio</a>
     </li>
   )
 }

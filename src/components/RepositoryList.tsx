@@ -1,22 +1,31 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react'
 
-import { RepositoryItem } from "./RepositoryItem"
+import { RepositoryItem } from './RepositoryItem'
 
-import "../styles/repositories.scss"
+import '../styles/repositories.scss'
 
 type TRepository = {
-  name: string;
-  description: string;
-  html_url: string;
+  name: string
+  description: string
+  htmlUrl: string
 }
 
-export function RepositoryList() {
+export const RepositoryList: React.FC = () => {
   const [repositories, setRepositories] = useState<TRepository[]>([])
 
   useEffect(() => {
     fetch('https://api.github.com/orgs/rocketseat/repos')
       .then(response => response.json())
-      .then(data => setRepositories(data)
+      .then(data =>
+        setRepositories(
+          data.map((repository: TRepository) => {
+            return {
+              name: repository.name,
+              description: repository.description,
+              htmlUrl: repository.htmlUrl
+            }
+          })
+        )
       )
   }, [])
 
@@ -25,11 +34,11 @@ export function RepositoryList() {
     <section className="repository-list">
       <h1>Lista de Repositórios</h1>
       <ul>
-        {
-          repositories.map(repository => {
-            return<RepositoryItem key={repository.name} repository={repository}/>
-          })
-        }
+        {repositories.map(repository => {
+          return (
+            <RepositoryItem key={repository.name} repository={repository} />
+          )
+        })}
       </ul>
     </section>
   )
